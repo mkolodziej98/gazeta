@@ -8,8 +8,11 @@
         "doctrine/doctrine-bundle": "*",
         "doctrine/doctrine-migrations-bundle": "*",
         "doctrine/orm": "*",
-        "knplabs/knp-paginator-bundle": "^5.3",
-        "sensio/framework-extra-bundle": "^5.6",
+        "erusev/parsedown": "^1.7",
+        "knplabs/knp-paginator-bundle": "^5.2",
+        "laminas/laminas-code": "^3.4",
+        "laminas/laminas-eventmanager": "^3.2",
+        "sensio/framework-extra-bundle": "^5.5",
         "sensiolabs/security-checker": "^6.0",
         "stof/doctrine-extensions-bundle": "^1.4",
         "symfony/asset": "4.4.*",
@@ -20,22 +23,21 @@
         "symfony/form": "4.4.*",
         "symfony/framework-bundle": "4.4.*",
         "symfony/http-client": "4.4.*",
-        "symfony/http-kernel": "4.4.*",
         "symfony/intl": "4.4.*",
         "symfony/mailer": "4.4.*",
         "symfony/monolog-bundle": "^3.1",
+        "symfony/orm-pack": "^1.0",
         "symfony/process": "4.4.*",
         "symfony/security-bundle": "4.4.*",
         "symfony/serializer-pack": "*",
         "symfony/translation": "4.4.*",
-        "symfony/twig-bundle": "4.4.*",
         "symfony/twig-pack": "^1.0",
         "symfony/validator": "4.4.*",
         "symfony/web-link": "4.4.*",
         "symfony/yaml": "4.4.*",
-        "twig/extra-bundle": "^2.12|^3.0",
+        "twig/extra-bundle": "^3.0",
         "twig/intl-extra": "^3.0",
-        "twig/twig": "^2.12|^3.0"
+        "twig/markdown-extra": "^3.0"
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.3",
@@ -45,7 +47,7 @@
         "phpmd/phpmd": "^2.8",
         "squizlabs/php_codesniffer": "^3.5",
         "symfony/debug-pack": "*",
-        "symfony/maker-bundle": "^1.18",
+        "symfony/maker-bundle": "^1.19",
         "symfony/stopwatch": "*",
         "symfony/test-pack": "*",
         "symfony/twig-bundle": "*",
@@ -59,6 +61,7 @@
         "sort-packages": true
     },
     "autoload": {
+        "files": ["app/AppKernel.php"],
         "psr-4": {
             "App\\": "src/"
         }
