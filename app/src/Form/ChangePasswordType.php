@@ -48,27 +48,7 @@ class ChangePasswordType extends AbstractType
 
                 ]
             );
-//
-//            'type' => 'password',
-//            'invalid_message' => 'The password fields must match.',
-//            'required' => true,
-//            'first_options'  => array('label' => 'Password'),
-//            'second_options' => array('label' => 'Repeat Password'),
-//        ));
 
-
-//        $builder->add(
-//            'plainPassword',
-//            RepeatedType::class,
-//            [
-//                'type' => PasswordType::class,
-//                'first_options'  => ['label' => 'label_password'],
-//                'second_options' => ['label' => 'label_repeat_password'],
-//                'required' => true,
-//                'attr' => ['max_length' => 180],
-//
-//            ]
-//        );
     }
 
     /**

@@ -28,7 +28,6 @@ class ArticleFixtures extends AbstractBaseFixtures implements DependentFixtureIn
             $article->setUpdatedAt($this->faker->dateTimeBetween('-100 days', '-1 days'));
             $article->setCategory($this->getRandomReference('categories'));
             $article->setText($this->faker->sentence);
-            //            $article->setAuthor($this->getRandomReference('admins'));
 
             return $article;
         });

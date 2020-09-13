@@ -1,4 +1,3 @@
-{#{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}#}
     {% include 'default/_form.html.twig' with {
         page_title: 'title_category_edit',
         page_title_param: {'%id%': category.id},
@@ -9,9 +8,3 @@
         form: form,
         back_to_list_path: 'category_index',
     } %}
-
-{#{% else %}#}
-{#    <div>#}
-{#        <a href="{{ url('app_login') }}">{{ 'action_login'|trans }}</a>#}
-{#    </div>#}
-{#{% endif %}#}

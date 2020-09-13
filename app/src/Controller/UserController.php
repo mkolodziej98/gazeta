@@ -58,42 +58,19 @@ class UserController extends AbstractController
      *     name="user_index",
      * )
      */
-    public function index(UserRepository $userRepository): Response
+    public function index(Request $request): Response
     {
 
+        $page = $request->query->getInt('page', 1);
+        $pagination = $this->userService->createPaginatedList($page);
 
         return $this->render(
             'user/index.html.twig',
-            ['users' => $userRepository->findAll()]
+            ['users' => $pagination]
         );
     }
 
-    /**
-     * Show action.
-     *
-     * @param \App\Entity\User $user User entity
-     *
-     * @return \Symfony\Component\HttpFoundation\Response HTTP response
-     *
-     * @Route(
-     *     "/{id}",
-     *     methods={"GET"},
-     *     name="user_show",
-     *     requirements={"id": "[1-9]\d*"},
-     * )
-     *
-     * @IsGranted(
-     *     "VIEW",
-     *     subject="user",
-     * )
-     */
-    public function show(User $user): Response
-    {
-        return $this->render(
-            'user/show.html.twig',
-            ['user' => $user]
-        );
-    }
+
 
 
     /**

@@ -64,19 +64,6 @@ class ArticleType extends AbstractType
             ]
         );
 
-//        $builder->add(
-//            'author',
-//            EntityType::class,
-//            [
-//                'class' => User::class,
-//                'choice_label' => function ($user) {
-//                    return $user->getEmail();
-//                },
-//                'label' => 'label_user',
-//                'placeholder' => 'label_none',
-//                'required' => true,
-//            ]
-//        );
     }
 
     /**

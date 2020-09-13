@@ -10,6 +10,7 @@ use App\Entity\Comment;
 use App\Form\ArticleType;
 use App\Form\CommentType;
 use App\Service\ArticleService;
+use App\Service\CommentService;
 use App\Repository\ArticleRepository;
 use App\Repository\CommentRepository;
 use Knp\Component\Pager\PaginatorInterface;
@@ -35,13 +36,21 @@ class ArticleController extends AbstractController
     private $articleService;
 
     /**
+     * Comment service.
+     *
+     * @var \App\Service\CommentService
+     */
+    private $commentService;
+
+    /**
      * ArticleController constructor.
      *
      * @param \App\Service\ArticleService $articleService Article service
      */
-    public function __construct(ArticleService $articleService)
+    public function __construct(ArticleService $articleService, CommentService $commentService)
     {
         $this->articleService = $articleService;
+        $this->commentService = $commentService;
     }
 
     /**
@@ -59,15 +68,11 @@ class ArticleController extends AbstractController
      *     name="article_index",
      * )
      */
-    public function index(Request $request, ArticleRepository $articleRepository, PaginatorInterface $paginator): Response
+    public function index(Request $request): Response
     {
         $page = $request->query->getInt('page', 1);
         $pagination = $this->articleService->createPaginatedList($page);
-//        $pagination = $paginator->paginate(
-//            $articleRepository->queryAll(),
-//            $request->query->getInt('page', 1),
-//            ArticleRepository::PAGINATOR_ITEMS_PER_PAGE
-//        );
+
 
         return $this->render(
             'article/index.html.twig',
@@ -93,12 +98,12 @@ class ArticleController extends AbstractController
      *     requirements={"id": "[1-9]\d*"},
      * )
      */
-    public function show(Article $article, CommentRepository $commentRepository): Response
+    public function show(Article $article): Response
     {
         return $this->render(
             'article/show.html.twig',
             ['article' => $article,
-                'data' => $commentRepository->findAll(), ]
+                'data' => $this->commentService->getByArticle($article) ]
         );
     }
 
@@ -119,7 +124,7 @@ class ArticleController extends AbstractController
      *     name="article_create",
      * )
      */
-    public function create(Request $request, ArticleRepository $articleRepository): Response
+    public function create(Request $request): Response
     {
         $article = new Article();
         $form = $this->createForm(ArticleType::class, $article);
@@ -169,7 +174,7 @@ class ArticleController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $articleRepository->save($article);
+            $this->articleService->save($article);
             $this->addFlash('success', 'message_updated_successfully');
 
             return $this->redirectToRoute('article_index');

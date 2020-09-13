@@ -71,16 +71,5 @@ class UserService
         $this->userRepository->save($user);
     }
 
-//    /**
-//     * Delete article.
-//     *
-//     * @param \App\Entity\Article $article Article entity
-//     *
-//     * @throws \Doctrine\ORM\ORMException
-//     * @throws \Doctrine\ORM\OptimisticLockException
-//     */
-//    public function delete(Article $article): void
-//    {
-//        $this->articleRepository->delete($article);
-//    }
+
 }

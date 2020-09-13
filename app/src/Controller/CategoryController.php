@@ -7,10 +7,12 @@
 namespace App\Controller;
 
 use App\Entity\Category;
+use App\Entity\Article;
 use App\Form\CategoryType;
 use App\Repository\CategoryRepository;
 use App\Repository\ArticleRepository;
 use App\Service\CategoryService;
+use App\Service\ArticleService;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -35,13 +37,21 @@ class CategoryController extends AbstractController
     private $categoryService;
 
     /**
+     * Article service.
+     *
+     * @var \App\Service\ArticleService
+     */
+    private $articleService;
+
+    /**
      * CategoryController constructor.
      *
      * @param \App\Service\CategoryService $categoryService Category service
      */
-    public function __construct(CategoryService $categoryService)
+    public function __construct(CategoryService $categoryService, ArticleService $articleService)
     {
         $this->categoryService = $categoryService;
+        $this->articleService = $articleService;
     }
 
     /**
@@ -63,11 +73,7 @@ class CategoryController extends AbstractController
     {
         $page = $request->query->getInt('page', 1);
         $pagination = $this->categoryService->createPaginatedList($page);
-//        $pagination = $paginator->paginate(
-//            $categoryRepository->queryAll(),
-//            $request->query->getInt('page', 1),
-//            CategoryRepository::PAGINATOR_ITEMS_PER_PAGE
-//        );
+
 
         return $this->render(
             'category/index.html.twig',
@@ -89,19 +95,16 @@ class CategoryController extends AbstractController
      *     requirements={"id": "[1-9]\d*"},
      * )
      */
-    public function show(Category $category, Request $request, ArticleRepository $articleRepository, PaginatorInterface $paginator): Response
+    public function show(Category $category): Response
     {
 
 
-//        $pagination = $paginator->paginate(
-//            $articleRepository->queryAll(),
-//            $request->query->getInt('page', 1),
-//           ArticleRepository::PAGINATOR_ITEMS_PER_PAGE);
+
 
         return $this->render(
             'category/show.html.twig',
             ['category' => $category,
-                'data' => $articleRepository->findAll(), ]
+                'data' => $this->articleService->getByCategory($category), ]
         );
     }
 

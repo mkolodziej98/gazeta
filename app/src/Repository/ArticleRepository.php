@@ -98,20 +98,4 @@ class ArticleRepository extends ServiceEntityRepository
         $this->_em->flush($article);
     }
 
-    /**
-     * Query articles by author.
-     *
-     * @param \App\Entity\User $user User entity
-     *
-     * @return \Doctrine\ORM\QueryBuilder Query builder
-     */
-    public function queryByAuthor(User $user): QueryBuilder
-    {
-        $queryBuilder = $this->queryAll();
-
-        $queryBuilder->andWhere('article.author = :author')
-            ->setParameter('author', $user);
-
-        return $queryBuilder;
-    }
 }
