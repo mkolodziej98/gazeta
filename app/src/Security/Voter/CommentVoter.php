@@ -2,6 +2,7 @@
 /**
  * Comment security voter.
  */
+
 namespace App\Security\Voter;
 
 use App\Entity\Comment;

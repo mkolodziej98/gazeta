@@ -60,7 +60,7 @@ class ConsoleOutput extends StreamOutput implements ConsoleOutputInterface
     /**
      * {@inheritdoc}
      */
-    public function setDecorated(bool $decorated)
+    public function setDecorated($decorated)
     {
         parent::setDecorated($decorated);
         $this->stderr->setDecorated($decorated);
@@ -78,7 +78,7 @@ class ConsoleOutput extends StreamOutput implements ConsoleOutputInterface
     /**
      * {@inheritdoc}
      */
-    public function setVerbosity(int $level)
+    public function setVerbosity($level)
     {
         parent::setVerbosity($level);
         $this->stderr->setVerbosity($level);

@@ -7,18 +7,14 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Entity\Comment;
-use App\Form\ArticleType;
 use App\Form\CommentType;
-use App\Service\CommentService;
-use App\Repository\ArticleRepository;
 use App\Repository\CommentRepository;
-use Knp\Component\Pager\PaginatorInterface;
+use App\Service\CommentService;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Request;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * Class CommentController.
@@ -27,7 +23,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
  */
 class CommentController extends AbstractController
 {
-
     /**
      * Comment service.
      *
@@ -45,7 +40,6 @@ class CommentController extends AbstractController
         $this->commentService = $commentService;
     }
 
-
     /**
      * Create action.
      *
@@ -62,11 +56,9 @@ class CommentController extends AbstractController
      *     methods={"GET", "POST"},
      *     name="comment_create",
      * )
-     *
      */
     public function create(Request $request, Article $article, CommentRepository $commentRepository): Response
     {
-
         $comment = new Comment();
         $comment->setArticle($article);
         $form = $this->createForm(CommentType::class, $comment);
@@ -112,10 +104,8 @@ class CommentController extends AbstractController
      */
     public function delete(Request $request, Comment $comment, CommentRepository $commentRepository): Response
     {
-
         $form = $this->createForm(CommentType::class, $comment, ['method' => 'DELETE']);
         $form->handleRequest($request);
-
 
         if ($request->isMethod('DELETE') && !$form->isSubmitted()) {
             $form->submit($request->request->get($form->getName()));

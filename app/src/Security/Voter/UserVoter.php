@@ -2,6 +2,7 @@
 /**
  * User security voter.
  */
+
 namespace App\Security\Voter;
 
 use App\Entity\User;

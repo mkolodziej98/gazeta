@@ -16,7 +16,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Class Category.
  *
- *
  * @ORM\Entity(repositoryClass="App\Repository\CategoryRepository")
  * @ORM\Table(name="categories")
  *
@@ -83,15 +82,13 @@ class Category
     /**
      * Articles.
      *
-     * @var \Doctrine\Common\Collections\ArrayCollection|\App\Entity\Article[] $articles Articles
+     * @var \Doctrine\Common\Collections\ArrayCollection|\App\Entity\Article[] Articles
      *
      * @ORM\OneToMany(
      *     targetEntity="App\Entity\Article",
      *     mappedBy="category",
      *     fetch="EXTRA_LAZY"
      * )
-     *
-     *
      */
     private $articles;
 
@@ -115,6 +112,9 @@ class Category
      */
     private $code;
 
+    /**
+     * Category constructor.
+     */
     public function __construct()
     {
         $this->articles = new ArrayCollection();
@@ -200,6 +200,9 @@ class Category
         return $this->articles;
     }
 
+    /**
+     * Add article method.
+     */
     public function addArticle(Article $article): self
     {
         if (!$this->articles->contains($article)) {
@@ -210,6 +213,9 @@ class Category
         return $this;
     }
 
+    /**
+     * Remove article method.
+     */
     public function removeArticle(Article $article): self
     {
         if ($this->articles->contains($article)) {
@@ -223,11 +229,22 @@ class Category
         return $this;
     }
 
+    /**
+     * Getter for Code.
+     *
+     * @return string|null
+     */
     public function getCode(): ?string
     {
         return $this->code;
     }
 
+    /**
+     * Setter for Code.
+     *
+     * @param string $code
+     * @return $this
+     */
     public function setCode(string $code): self
     {
         $this->code = $code;

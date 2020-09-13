@@ -28,9 +28,11 @@ class OutputFormatter implements WrappableOutputFormatterInterface
     /**
      * Escapes "<" special char in given text.
      *
+     * @param string $text Text to escape
+     *
      * @return string Escaped text
      */
-    public static function escape(string $text)
+    public static function escape($text)
     {
         $text = preg_replace('/([^\\\\]?)</', '$1\\<', $text);
 
@@ -78,9 +80,9 @@ class OutputFormatter implements WrappableOutputFormatterInterface
     /**
      * {@inheritdoc}
      */
-    public function setDecorated(bool $decorated)
+    public function setDecorated($decorated)
     {
-        $this->decorated = $decorated;
+        $this->decorated = (bool) $decorated;
     }
 
     /**
@@ -94,7 +96,7 @@ class OutputFormatter implements WrappableOutputFormatterInterface
     /**
      * {@inheritdoc}
      */
-    public function setStyle(string $name, OutputFormatterStyleInterface $style)
+    public function setStyle($name, OutputFormatterStyleInterface $style)
     {
         $this->styles[strtolower($name)] = $style;
     }
@@ -102,7 +104,7 @@ class OutputFormatter implements WrappableOutputFormatterInterface
     /**
      * {@inheritdoc}
      */
-    public function hasStyle(string $name)
+    public function hasStyle($name)
     {
         return isset($this->styles[strtolower($name)]);
     }
@@ -110,7 +112,7 @@ class OutputFormatter implements WrappableOutputFormatterInterface
     /**
      * {@inheritdoc}
      */
-    public function getStyle(string $name)
+    public function getStyle($name)
     {
         if (!$this->hasStyle($name)) {
             throw new InvalidArgumentException(sprintf('Undefined style: "%s".', $name));
@@ -122,15 +124,15 @@ class OutputFormatter implements WrappableOutputFormatterInterface
     /**
      * {@inheritdoc}
      */
-    public function format(?string $message)
+    public function format($message)
     {
-        return $this->formatAndWrap($message, 0);
+        return $this->formatAndWrap((string) $message, 0);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function formatAndWrap(?string $message, int $width)
+    public function formatAndWrap(string $message, int $width)
     {
         $offset = 0;
         $output = '';

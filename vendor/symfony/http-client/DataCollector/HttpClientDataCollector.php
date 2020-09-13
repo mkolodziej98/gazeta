@@ -16,7 +16,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\DataCollector\DataCollector;
 use Symfony\Component\HttpKernel\DataCollector\LateDataCollectorInterface;
-use Symfony\Component\VarDumper\Caster\ImgStub;
 
 /**
  * @author Jérémy Romey <jeremy@free-agent.fr>
@@ -35,8 +34,10 @@ final class HttpClientDataCollector extends DataCollector implements LateDataCol
 
     /**
      * {@inheritdoc}
+     *
+     * @param \Throwable|null $exception
      */
-    public function collect(Request $request, Response $response, \Throwable $exception = null)
+    public function collect(Request $request, Response $response/*, \Throwable $exception = null*/)
     {
         $this->reset();
 
@@ -129,31 +130,8 @@ final class HttpClientDataCollector extends DataCollector implements LateDataCol
                 }
             }
 
-            if (\is_string($content = $trace['content'])) {
-                $contentType = 'application/octet-stream';
-
-                foreach ($info['response_headers'] ?? [] as $h) {
-                    if (0 === stripos($h, 'content-type: ')) {
-                        $contentType = substr($h, \strlen('content-type: '));
-                        break;
-                    }
-                }
-
-                if (0 === strpos($contentType, 'image/') && class_exists(ImgStub::class)) {
-                    $content = new ImgStub($content, $contentType, '');
-                } else {
-                    $content = [$content];
-                }
-
-                $content = ['response_content' => $content];
-            } elseif (\is_array($content)) {
-                $content = ['response_json' => $content];
-            } else {
-                $content = [];
-            }
-
             $debugInfo = array_diff_key($info, $baseInfo);
-            $info = ['info' => $debugInfo] + array_diff_key($info, $debugInfo) + $content;
+            $info = array_diff_key($info, $debugInfo) + ['debug_info' => $debugInfo];
             unset($traces[$i]['info']); // break PHP reference used by TraceableHttpClient
             $traces[$i]['info'] = $this->cloneVar($info);
             $traces[$i]['options'] = $this->cloneVar($trace['options']);

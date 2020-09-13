@@ -3,10 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Comment;
-use App\Entity\Article;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\QueryBuilder;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * Class CommentRepository.
@@ -49,8 +48,6 @@ class CommentRepository extends ServiceEntityRepository
         return $this->getOrCreateQueryBuilder()
             ->orderBy('comment.createdAt', 'DESC');
     }
-
-
 
     /**
      * Get or create new query builder.

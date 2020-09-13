@@ -11,7 +11,6 @@
 
 namespace Symfony\Component\Console\Helper;
 
-use Symfony\Component\Console\Cursor;
 use Symfony\Component\Console\Exception\MissingInputException;
 use Symfony\Component\Console\Exception\RuntimeException;
 use Symfony\Component\Console\Formatter\OutputFormatter;
@@ -24,7 +23,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ChoiceQuestion;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Terminal;
-use function Symfony\Component\String\s;
 
 /**
  * The QuestionHelper class provides helpers to interact with the user.
@@ -204,9 +202,11 @@ class QuestionHelper extends Helper
     }
 
     /**
+     * @param string $tag
+     *
      * @return string[]
      */
-    protected function formatChoiceQuestionChoices(ChoiceQuestion $question, string $tag)
+    protected function formatChoiceQuestionChoices(ChoiceQuestion $question, $tag)
     {
         $messages = [];
 
@@ -242,8 +242,6 @@ class QuestionHelper extends Helper
      */
     private function autocomplete(OutputInterface $output, Question $question, $inputStream, callable $autocomplete): string
     {
-        $cursor = new Cursor($output, $inputStream);
-
         $fullChoice = '';
         $ret = '';
 
@@ -271,9 +269,9 @@ class QuestionHelper extends Helper
             } elseif ("\177" === $c) { // Backspace Character
                 if (0 === $numMatches && 0 !== $i) {
                     --$i;
-                    $cursor->moveLeft(s($fullChoice)->slice(-1)->width(false));
-
                     $fullChoice = self::substr($fullChoice, 0, $i);
+                    // Move cursor backwards
+                    $output->write("\033[1D");
                 }
 
                 if (0 === $i) {
@@ -359,14 +357,17 @@ class QuestionHelper extends Helper
                 }
             }
 
-            $cursor->clearLineAfter();
+            // Erase characters from cursor to end of line
+            $output->write("\033[K");
 
             if ($numMatches > 0 && -1 !== $ofs) {
-                $cursor->savePosition();
+                // Save cursor position
+                $output->write("\0337");
                 // Write highlighted text, complete the partially entered response
                 $charactersEntered = \strlen(trim($this->mostRecentlyEnteredValue($fullChoice)));
                 $output->write('<hl>'.OutputFormatter::escapeTrailingBackslash(substr($matches[$ofs], $charactersEntered)).'</hl>');
-                $cursor->restorePosition();
+                // Restore cursor position
+                $output->write("\0338");
             }
         }
 

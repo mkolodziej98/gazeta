@@ -8,18 +8,14 @@ namespace App\Controller;
 use App\Entity\Article;
 use App\Entity\Comment;
 use App\Form\ArticleType;
-use App\Form\CommentType;
+use App\Repository\ArticleRepository;
 use App\Service\ArticleService;
 use App\Service\CommentService;
-use App\Repository\ArticleRepository;
-use App\Repository\CommentRepository;
-use Knp\Component\Pager\PaginatorInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Request;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * Class ArticleController.
@@ -73,7 +69,6 @@ class ArticleController extends AbstractController
         $page = $request->query->getInt('page', 1);
         $pagination = $this->articleService->createPaginatedList($page);
 
-
         return $this->render(
             'article/index.html.twig',
             ['pagination' => $pagination]
@@ -103,7 +98,7 @@ class ArticleController extends AbstractController
         return $this->render(
             'article/show.html.twig',
             ['article' => $article,
-                'data' => $this->commentService->getByArticle($article) ]
+                'data' => $this->commentService->getByArticle($article), ]
         );
     }
 
@@ -143,7 +138,6 @@ class ArticleController extends AbstractController
         );
     }
 
-
     /**
      * Edit action.
      *
@@ -168,7 +162,7 @@ class ArticleController extends AbstractController
      *     subject="article",
      * )
      */
-    public function edit(Request $request, Article $article, ArticleRepository $articleRepository): Response
+    public function edit(Request $request, Article $article): Response
     {
         $form = $this->createForm(ArticleType::class, $article, ['method' => 'PUT']);
         $form->handleRequest($request);
@@ -213,7 +207,7 @@ class ArticleController extends AbstractController
      *     subject="article",
      * )
      */
-    public function delete(Request $request, Article $article, ArticleRepository $articleRepository): Response
+    public function delete(Request $request, Article $article): Response
     {
         $form = $this->createForm(ArticleType::class, $article, ['method' => 'DELETE']);
         $form->handleRequest($request);

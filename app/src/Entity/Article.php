@@ -2,15 +2,13 @@
 /**
  * Article entity.
  */
+
 namespace App\Entity;
 
 use DateTimeInterface;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
-use Twig\Extra\Intl\IntlExtension;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -107,13 +105,10 @@ class Article
      */
     private $code;
 
-
-
-
     /**
      * Comments.
      *
-     * @var \Doctrine\Common\Collections\ArrayCollection|\App\Entity\Comment[] $comments Comments
+     * @var \Doctrine\Common\Collections\ArrayCollection|\App\Entity\Comment[] Comments
      *
      * @ORM\OneToMany(
      *     targetEntity="App\Entity\Comment",
@@ -122,7 +117,6 @@ class Article
      * )
      */
     private $comments;
-
 
     /**
      * Getter for Id.
@@ -165,7 +159,7 @@ class Article
     }
 
     /**
-     * Setter for Created at
+     * Setter for Created at.
      *
      * @param \DateTimeInterface $createdAt Created at
      */
@@ -175,7 +169,7 @@ class Article
     }
 
     /**
-     * Getter for Updated at
+     * Getter for Updated at.
      *
      * @return \DateTimeInterface|null Updated at
      */
@@ -214,12 +208,24 @@ class Article
         $this->text = $text;
     }
 
+    /**
+     * Getter for Category.
+     *
+     * @return string|null Result
+     */
     public function getCategory(): ?Category
     {
         return $this->category;
     }
 
 
+    /**
+     * Setter for Category.
+     *
+     * @param Category|null $category
+     *
+     * @return $this
+     */
     public function setCategory(?Category $category): self
     {
         $this->category = $category;
@@ -227,26 +233,26 @@ class Article
         return $this;
     }
 
+    /**
+     * Getter for Code.
+     *
+     * @return string|null Result
+     */
     public function getCode(): ?string
     {
         return $this->code;
     }
 
+    /**
+     * Setter for code.
+     *
+     * @param string $code
+     *
+     * @return $this
+     */
     public function setCode(string $code): self
     {
         $this->code = $code;
-
-        return $this;
-    }
-
-    public function getAuthor(): ?User
-    {
-        return $this->author;
-    }
-
-    public function setAuthor(?User $author): self
-    {
-        $this->author = $author;
 
         return $this;
     }
@@ -255,14 +261,16 @@ class Article
     /**
      * Getter for comments.
      *
-     * @return Collection|Comment[]
+     * @return Collection
      */
     public function getComments(): Collection
     {
         return $this->comments;
     }
 
-
+    /**
+     * Add comment method.
+     */
     public function addComment(Comment $comment): self
     {
         if (!$this->comments->contains($comment)) {
@@ -273,6 +281,9 @@ class Article
         return $this;
     }
 
+    /**
+     * Remove comment method.
+     */
     public function removeComment(Comment $comment): self
     {
         if ($this->comments->contains($comment)) {

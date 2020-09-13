@@ -2,12 +2,10 @@
 
 namespace App\Entity;
 
-use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Security\Core\Validator\Constraints as SecurityAssert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -38,7 +36,6 @@ class User implements UserInterface
      * @var string
      */
     const ROLE_ADMIN = 'ROLE_ADMIN';
-
 
     /**
      * Primary key.
@@ -87,7 +84,6 @@ class User implements UserInterface
      * @ORM\Column(type="string")
 
      * @Assert\NotBlank
-     *
      */
     private $password;
 
@@ -95,7 +91,6 @@ class User implements UserInterface
      * Plain Password.
      *
      * @Assert\Length(max=4096)
-     *
      */
     private $plainPassword;
 
@@ -165,8 +160,6 @@ class User implements UserInterface
         $this->roles = $roles;
     }
 
-
-
     /**
      * Getter for the Password.
      *
@@ -212,7 +205,6 @@ class User implements UserInterface
 
         return $this;
     }
-
 
     /**
      * @see UserInterface

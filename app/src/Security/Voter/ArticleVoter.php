@@ -2,6 +2,7 @@
 /**
  * Article security voter.
  */
+
 namespace App\Security\Voter;
 
 use App\Entity\Article;

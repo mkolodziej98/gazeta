@@ -5,8 +5,8 @@
 
 namespace App\Form;
 
-use App\Entity\Category;
 use App\Entity\Article;
+use App\Entity\Category;
 use App\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -63,7 +63,6 @@ class ArticleType extends AbstractType
                 'required' => true,
             ]
         );
-
     }
 
     /**

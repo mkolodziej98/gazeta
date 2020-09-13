@@ -8,7 +8,6 @@ namespace App\Service;
 use App\Entity\Article;
 use App\Entity\Category;
 use App\Repository\ArticleRepository;
-use App\Repository\CommentRepository;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
 
@@ -24,7 +23,6 @@ class ArticleService
      */
     private $articleRepository;
 
-
     /**
      * Paginator.
      *
@@ -32,22 +30,18 @@ class ArticleService
      */
     private $paginator;
 
-
-
     /**
      * ArticleService constructor.
      *
      * @param \App\Repository\ArticleRepository       $articleRepository Article repository
      * @param \Knp\Component\Pager\PaginatorInterface $paginator         Paginator
-     * @param \App\Service\CategoryService            $categoryService Category service
+     * @param \App\Service\CategoryService            $categoryService   Category service
      */
     public function __construct(ArticleRepository $articleRepository, PaginatorInterface $paginator)
     {
         $this->articleRepository = $articleRepository;
         $this->paginator = $paginator;
-
     }
-
 
     /**
      * Create paginated list.
@@ -64,8 +58,6 @@ class ArticleService
             ArticleRepository::PAGINATOR_ITEMS_PER_PAGE
         );
     }
-
-
 
     /**
      * Save article.
@@ -103,10 +95,6 @@ class ArticleService
      */
     public function getByCategory(Category $category)
     {
-
         return $this->articleRepository->findByCategory($category);
-
     }
-
-
 }

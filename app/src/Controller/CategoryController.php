@@ -6,21 +6,18 @@
 
 namespace App\Controller;
 
-use App\Entity\Category;
 use App\Entity\Article;
+use App\Entity\Category;
 use App\Form\CategoryType;
 use App\Repository\CategoryRepository;
-use App\Repository\ArticleRepository;
-use App\Service\CategoryService;
 use App\Service\ArticleService;
+use App\Service\CategoryService;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Twig\Extra\Intl\IntlExtension;
-use Symfony\Component\Form\Extension\Core\Type\FormType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * Class CategoryController.
@@ -69,11 +66,10 @@ class CategoryController extends AbstractController
      *     name="category_index",
      * )
      */
-    public function index(Request $request, CategoryRepository $categoryRepository, PaginatorInterface $paginator): Response
+    public function index(Request $request): Response
     {
         $page = $request->query->getInt('page', 1);
         $pagination = $this->categoryService->createPaginatedList($page);
-
 
         return $this->render(
             'category/index.html.twig',
@@ -97,10 +93,6 @@ class CategoryController extends AbstractController
      */
     public function show(Category $category): Response
     {
-
-
-
-
         return $this->render(
             'category/show.html.twig',
             ['category' => $category,

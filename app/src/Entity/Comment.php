@@ -2,12 +2,12 @@
 /**
  * Comment entity.
  */
+
 namespace App\Entity;
 
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -50,7 +50,6 @@ class Comment
      * )
      *
      * @Assert\Email
-     *
      */
     private $usernick;
 
@@ -93,7 +92,7 @@ class Comment
     }
 
     /**
-     * Setter for Created at
+     * Setter for Created at.
      *
      * @param \DateTimeInterface $createdAt Created at
      */
@@ -142,11 +141,23 @@ class Comment
         $this->text = $text;
     }
 
+    /**
+     * Getter for Article.
+     *
+     * @return Article|null
+     */
     public function getArticle(): ?Article
     {
         return $this->article;
     }
 
+    /**
+     * Setter for Article.
+     *
+     * @param Article|null $article
+     *
+     * @return $this
+     */
     public function setArticle(?Article $article): self
     {
         $this->article = $article;

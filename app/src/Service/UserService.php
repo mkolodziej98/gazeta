@@ -33,8 +33,8 @@ class UserService
     /**
      * UserService constructor.
      *
-     * @param \App\Repository\UserRepository $userRepository User repository
-     * @param \Knp\Component\Pager\PaginatorInterface $paginator Paginator
+     * @param \App\Repository\UserRepository          $userRepository User repository
+     * @param \Knp\Component\Pager\PaginatorInterface $paginator      Paginator
      */
     public function __construct(UserRepository $userRepository, PaginatorInterface $paginator)
     {
@@ -70,6 +70,4 @@ class UserService
     {
         $this->userRepository->save($user);
     }
-
-
 }

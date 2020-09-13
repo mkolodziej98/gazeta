@@ -5,10 +5,9 @@
 
 namespace App\Service;
 
-use App\Entity\Comment;
 use App\Entity\Article;
+use App\Entity\Comment;
 use App\Repository\CommentRepository;
-use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
 
 /**
@@ -23,8 +22,6 @@ class CommentService
      */
     private $commentRepository;
 
-
-
     /**
      * CommentService constructor.
      *
@@ -35,8 +32,6 @@ class CommentService
     {
         $this->commentRepository = $commentRepository;
     }
-
-
 
     /**
      * Save comment.
@@ -74,8 +69,6 @@ class CommentService
      */
     public function getByArticle(Article $article)
     {
-
-    return $this->commentRepository->findByArticle($article);
-
+        return $this->commentRepository->findByArticle($article);
     }
 }

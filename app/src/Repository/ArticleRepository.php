@@ -6,10 +6,9 @@
 namespace App\Repository;
 
 use App\Entity\Article;
-use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\QueryBuilder;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * Class ArticleRepository.
@@ -97,5 +96,4 @@ class ArticleRepository extends ServiceEntityRepository
         $this->_em->remove($article);
         $this->_em->flush($article);
     }
-
 }

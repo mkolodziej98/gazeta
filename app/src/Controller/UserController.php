@@ -6,18 +6,16 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Form\UserType;
 use App\Form\ChangePasswordType;
+use App\Form\UserType;
 use App\Repository\UserRepository;
 use App\Service\UserService;
-use Knp\Component\Pager\PaginatorInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * Class UserController.
@@ -60,7 +58,6 @@ class UserController extends AbstractController
      */
     public function index(Request $request): Response
     {
-
         $page = $request->query->getInt('page', 1);
         $pagination = $this->userService->createPaginatedList($page);
 
@@ -69,9 +66,6 @@ class UserController extends AbstractController
             ['users' => $pagination]
         );
     }
-
-
-
 
     /**
      * Edit action.
@@ -97,9 +91,9 @@ class UserController extends AbstractController
      *     subject="user",
      * )
      */
-    public function edit(Request $request, User $user, UserRepository $userRepository, UserPasswordEncoderInterface $passwordEncoder): Response
+    public function edit(Request $request, User $user): Response
     {
-        $email = $this ->getUser()->getEmail();
+        $email = $this->getUser()->getEmail();
         $form = $this->createForm(UserType::class, $user, ['method' => 'PUT']);
         $form->handleRequest($request);
 
@@ -119,7 +113,6 @@ class UserController extends AbstractController
             ]
         );
     }
-
 
     /**
      * Change password action.
@@ -145,9 +138,9 @@ class UserController extends AbstractController
      *     subject="user",
      * )
      */
-    public function changePassword(Request $request, User $user, UserRepository $userRepository, UserPasswordEncoderInterface $passwordEncoder): Response
+    public function changePassword(Request $request, User $user, UserPasswordEncoderInterface $passwordEncoder): Response
     {
-        $email = $this ->getUser();
+        $email = $this->getUser();
         $form = $this->createForm(ChangePasswordType::class, $user, ['method' => 'PUT']);
         $form->handleRequest($request);
 
